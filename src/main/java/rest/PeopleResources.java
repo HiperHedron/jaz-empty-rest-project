@@ -63,6 +63,19 @@ public class PeopleResources {
 			result.setCars(new ArrayList<Car>());
 		return result.getCars();
 	}
+	
+	@POST
+	@Path("/{id}/cars")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addCar(@PathParam("id") int personId, Car car){
+		Person result = db.get(personId);
+		if(result==null)
+			return Response.status(404).build();
+		if(result.getCars()==null)
+			result.setCars(new ArrayList<Car>());
+		result.getCars().add(car);
+		return Response.ok().build();
+	}
 
 }
 
